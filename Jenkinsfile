@@ -8,18 +8,18 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage(:Build Docker Image") {
-              when {
-                  branch 'master'
-              }
-              steps {
-                  scripts {
-                      app = docker.build(khadga/train-schedule")
-                                         app.inside {
-                                             sh 'echo $(curl localhost:8080)'
-                                         }
-                                         }
-                                         }
-                                         }
+        stage('Build Docker Image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    app= docker.build("khadga/train-schedule")
+                    app.inside {
+                        sh 'echo $(curl localhost:8080)'
+                    }
+                }
+            }
+        }
     }
 }
